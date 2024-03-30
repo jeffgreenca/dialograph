@@ -1,0 +1,43 @@
+<s>[INST]
+Here is a series of actions a user took while drawing a diagram - note it is in reverse order
+[
+  {
+    "time": 1711753657,
+    "action": {
+      "type": "select_rectangle",
+      "id": "2pd4l"
+    }
+  },
+  {
+    "time": 1711753655,
+    "action": {
+      "type": "create_rectangle",
+      "id": "4umvl"
+    }
+  },
+  {
+    "time": 1711753652,
+    "action": {
+      "type": "create_rectangle",
+      "id": "2pd4l"
+    }
+  }
+]
+
+Here is the narrative that they spoke while taking these actions:
+
+Time: 1711753650 Transcript: first we have the backend api
+Time: 1711753652 Transcript: then we connect it to the database, postgres in this case
+Time: 1711753658 Transcript: we use mTLS to authenticate the connection here
+
+Based on the action log and transcript, determine the annotations that need to be made to the diagram. You can perform any of these annotations:
+
+LABEL[id]=text to put as the label
+CONNECT[id1]=[id2]
+
+List all actions, one per line. Your response must adhere to the annotation format given above. Do not include timestamps, additional descriptions or anything else. Simply write "LABEL..." or "CONNECT..." as shown above, to complete all the information given by the user during the transcript.
+
+[/INST]
+CONNECT["4umvl"]=["2pd4l"]
+LABEL["2pd4l"]="Backend API"
+LABEL["4umvl"]="Database (PostgreSQL)"

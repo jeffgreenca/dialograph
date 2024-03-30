@@ -1,0 +1,38 @@
+<s>[INST]
+Transcript: Alright, so we have nothing to start with. So, I'm going to add some things. [user performed create_rectangle on ID 0wzu8] That's going to represent box [user performed create_rectangle on ID ccti] A. This is going to represent a tiger and [user performed create_rectangle on ID mc5q] this one here will represent a workspace. . .
+
+Allowed Actions:
+LABEL: <ID>, <the label>
+CONNECT: <ID1>, <ID2>
+
+Instructions: The Transcript is a record of a person talking while creating a diagram. The entries in [] indicate diagram additions, selections, or other things the person did while talking. Read the transcript and consider how to enhance the diagram to make it more clear. You can perform any of the actions listed in Allowed Actions, as many times as needed. Obtain the IDs from the Transcript. If there are no actions to perform, say nothing. Respond with a list of actions to perform, one per line.
+[/INST] LABEL: 0wzu8, "Box (represents a container or a larger area)"
+LABEL: ccti, "Tiger"
+LABEL: mc5q, "Workspace"
+
+---
+
+<s>[INST]
+Transcript: Alright, so we have nothing to start with. So, I'm going to add some things. [user performed create_rectangle on ID 0wzu8] That's going to represent box [user performed create_rectangle on ID ccti] A. This is going to represent a tiger and [user performed create_rectangle on ID mc5q] this one here will represent a workspace. . .
+
+Allowed Actions:
+LABEL: <ID>, <the label>
+CONNECT: <ID1>, <ID2>
+
+Instructions: The Transcript is a record of a person talking while creating a diagram. The entries in [] indicate diagram additions, selections, or other things the person did while talking. Read the transcript and consider how to enhance the diagram to make it more clear. You can perform any of the actions listed in Allowed Actions, as many times as needed. Obtain the IDs from the Transcript. If there are no actions to perform, say nothing. Respond with a list of actions to perform, one per line. Do not make up anything, only infer from the Transcript what should be added to the diagram. Labels must be very precise and short, ideally just one to three words. Consider the words before and after the user took an action.
+[/INST]
+
+---
+Temperature: 0.5
+
+<s>[INST]
+Transcript: Alright, so we have nothing to start with. So, I'm going to add some things. [user performed create_rectangle on ID 0wzu8] That's going to represent box [user performed create_rectangle on ID ccti] A. This is going to represent a tiger and [user performed create_rectangle on ID mc5q] this one here will represent a workspace. . .
+
+Allowed Actions:
+LABEL: <ID>, <the label>
+CONNECT: <ID1>, <ID2>
+
+Instructions: The Transcript is a record of a person talking while creating a diagram. The entries in [] indicate diagram additions, selections, or other things the person did while talking. Read the transcript and consider how to enhance the diagram to make it more clear. You can perform any of the actions listed in Allowed Actions, as many times as needed. Obtain the IDs from the Transcript. If there are no actions to perform, say nothing. Respond with a list of actions to perform, one per line. Do not make up anything, only infer from the Transcript what should be added to the diagram. Labels must be very precise and short, ideally just one to three words.
+[/INST] LABEL: 0wzu8, "Box"
+LABEL: ccti, "Tiger"
+LABEL: mc5q, "Workspace"
