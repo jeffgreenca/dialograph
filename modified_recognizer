@@ -1,0 +1,79 @@
+                    # detect whether speaking has started on audio input
+                    energy = audioop.rms(buffer, source.SAMPLE_WIDTH)  # energy of the audio signal
+                    # we're going to show a little indicator like this
+                    # Energy: ########      |
+                    # where the # marks the volume level, and the | marks the energy threshold
+                    # but we scale it down by SCALE (factor of 5 to start) to make it fit ona line
+                    # and we use "\r" to keep it live updated
+                    scale = 8
+                    indicator = []
+
+                    # populate indicator with a 3 character string showing current energy level
+                    indicator.append(f"[{energy:04d} 000]")
+                    en = energy // scale
+                    th = self.energy_threshold // scale
+                    for i in range(80):
+                        if i == th:
+                            indicator.append("|")
+                        elif i < en:
+                            indicator.append("#")
+                        else:
+                            indicator.append(" ")
+                    print("\r" + "".join(indicator), end="", flush=True)
+                    if energy > self.energy_threshold: break
+
+                    # dynamically adjust the energy threshold using asymmetric weighted average
+                    if self.dynamic_energy_threshold:
+                        damping = self.dynamic_energy_adjustment_damping ** seconds_per_buffer  # account for different chunk sizes and rates
+                        target_energy = energy * self.dynamic_energy_ratio
+                        self.energy_threshold = self.energy_threshold * damping + target_energy * (1 - damping)
+            else:
+                # read audio input until the hotword is said
+                snowboy_location, snowboy_hot_word_files = snowboy_configuration
+                buffer, delta_time = self.snowboy_wait_for_hot_word(snowboy_location, snowboy_hot_word_files, source, timeout)
+                elapsed_time += delta_time
+                if len(buffer) == 0: break  # reached end of the stream
+                frames.append(buffer)
+
+            # read audio input until the phrase ends
+            pause_count, phrase_count = 0, 0
+            phrase_start_time = elapsed_time
+            while True:
+                # handle phrase being too long by cutting off the audio
+                elapsed_time += seconds_per_buffer
+                if phrase_time_limit and elapsed_time - phrase_start_time > phrase_time_limit:
+                    break
+
+                buffer = source.stream.read(source.CHUNK)
+                if len(buffer) == 0: break  # reached end of the stream
+                frames.append(buffer)
+                phrase_count += 1
+
+                # check if speaking has stopped for longer than the pause threshold on the audio input
+                energy = audioop.rms(buffer, source.SAMPLE_WIDTH)  # unit energy of the audio signal within the buffer
+                if energy > self.energy_threshold:
+                    pause_count = 0
+                else:
+                    pause_count += 1
+                # we're going to show a little indicator like this
+                # Energy: ########      |
+                # where the # marks the volume level, and the | marks the energy threshold
+                # but we scale it down by SCALE (factor of 5 to start) to make it fit ona line
+                # and we use "\r" to keep it live updated
+                scale = 8
+                indicator = []
+
+                # populate indicator with a 3 character string showing current energy level
+                indicator.append(f"[{energy:04d} {pause_count:03d}]")
+                en = energy // scale
+                th = self.energy_threshold // scale
+                for i in range(80):
+                    if i == th:
+                        indicator.append("|")
+                    elif i < en:
+                        indicator.append("#")
+                    else:
+                        indicator.append(" ")
+                print("\r" + "".join(indicator), end="", flush=True)
+                if pause_count > pause_buffer_count:  # end of the phrase
+                    break
