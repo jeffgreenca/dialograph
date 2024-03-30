@@ -368,9 +368,10 @@ follow the allowed action format precisely. Use IDs from the diagram transcript.
         addActionEntry({ type: "select_rectangle", id })
     }
 
+    const diags = false;
+
     return (
         <div style={{ width: "100%", height: "100vh" }}>
-            <button onClick={handleCompleteClick}>Do Complete</button>
             <svg style={{ width: "80%", border: "1px solid green", float: "left" }} width="80%" height="100%" onClick={handleSvgClick}>
                 {svgLines.map((line, index) => (
                     <line key={index} x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} style={{ stroke: "black", strokeWidth: 2 }} />
@@ -391,6 +392,15 @@ follow the allowed action format precisely. Use IDs from the diagram transcript.
                 ))}
             </svg>
             <div style={{ width: "20%", height: "100%", backgroundColor: "lightgray", float: "right" }}>
+            <div style={{textAlign: "center", paddingTop: "15px"}}>
+                <button onClick={handleCompleteClick} style={{border: "2px solid red", padding: "4px"}}>Enhance!</button>
+                <hr style={{ margin: "15px"}}></hr>
+                <p>Transcript</p>
+                <p style={{ fontSize: '0.5em' }}>
+                    {transcript.map((w) => w.word).join(' ')}
+                </p>
+            </div>
+            {diags && <>
                 <p>Merged</p>
                 <p>{mergedTranscript}</p>
                 <p><input type="checkbox" checked={showRectangleDiagnostics} onChange={() => setShowRectangleDiagnostics(!showRectangleDiagnostics)} /> rectangles</p>
@@ -404,7 +414,8 @@ follow the allowed action format precisely. Use IDs from the diagram transcript.
                 <p>action log</p>
                 <pre style={{ whiteSpace: "pre-wrap", fontSize: '0.5em' }}>
                     {JSON.stringify(actionLog.slice().reverse(), null, 2)}
-                </pre>
+                </pre></>
+            }
             </div>
         </div>
     )
